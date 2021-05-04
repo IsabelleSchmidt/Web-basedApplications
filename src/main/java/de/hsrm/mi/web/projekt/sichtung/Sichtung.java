@@ -9,6 +9,11 @@ public class Sichtung {
     private LocalDate datum;
     private String beschreibung;
     
+    public Sichtung(String name, String ort, LocalDate datum, String beschreibung) {
+    }
+
+    public Sichtung(){
+    }
     public String getName() {
         return name;
     }
