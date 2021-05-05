@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<HTML xmlns:th="http://thymeleaf.org">
+        <head>
+            <title >Sichtungen</title>
+        </head>
+        <body>
+            <h1 >17 Sichtungen</h1>
+            <table>
+                <thead>
+                    <th>Datum</th>
+                    <th>Name</th>
+                    <th>Ort</th>
+                    <th>Beschreibung</th>
+                    <th>Löschen</th>
+                    <th>Bearbeiten</th>
+                </thead>
+                <tbody>
+                    <tr th:each="s : ${meinesichtungen}">
+                        <td th:text = "${s.getDatum()}"></td>
+                        <td th:text = "${s.getName()}"></td>
+                        <td th:text = "${s.getOrt()}"></td>
+                        <td th:text = "${s.getBeschreibung()}"></td>
+                    <!-- <td><a th:href="@{/angebote/{number}/del(number = ${angebote.indexOf(b)})}">[del]</a></td>
+                        <td><a th:href="@{/angebote/{number}(number = ${angebote.indexOf(b)})}">[edit]</a></td>
+                    -->
+                    </tr>
+                </tbody>
+            </table>
+    <!--<a th:href = "@{/angebote/neu}"><button>Lecker schmecker Braten braten</button></a>-->
+        </body>
+</HTML>
+
+<style>
+</style>
