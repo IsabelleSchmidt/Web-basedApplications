@@ -15,7 +15,7 @@
                     <th>Bearbeiten</th>
                 </thead>
                 <tbody>
-                    <tr th:each="meinesichtungen:${meinesichtungen}">
+                    <tr th:each="meinesichtungen,number:${meinesichtungen}">
                         <td th:text = "${meinesichtungen.datum}"></td>
                         <td th:text = "${meinesichtungen.name}"></td>
                         <td th:text = "${meinesichtungen.ort}"></td>
