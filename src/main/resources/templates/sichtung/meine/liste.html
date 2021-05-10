@@ -16,10 +16,10 @@
                 </thead>
                 <tbody>
                     <tr th:each="meinesichtungen,number:${meinesichtungen}">
-                        <td th:text = "${meinesichtungen.datum}"></td>
-                        <td th:text = "${meinesichtungen.name}"></td>
-                        <td th:text = "${meinesichtungen.ort}"></td>
-                        <td th:text = "${meinesichtungen.beschreibung}"></td>
+                        <td th:text = "${meinesichtungen.getDatum()}"></td>
+                        <td th:text = "${meinesichtungen.getName()}"></td>
+                        <td th:text = "${meinesichtungen.getOrt()}"></td>
+                        <td th:text = "${meinesichtungen.getBeschreibung()}"></td>
                         <td><a th:href="@{/sichtung/meine/{number}/del(number = ${number.index})}">[del]</a></td>
                         <td><a th:href="@{/sichtung/meine/{number}(number = ${number.index})}">[edit]</a></td>
                     </tr>

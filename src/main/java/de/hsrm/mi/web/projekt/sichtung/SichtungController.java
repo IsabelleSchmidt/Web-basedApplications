@@ -37,7 +37,7 @@ public class SichtungController {
         s2.setBeschreibung("17 Sichtung bei meiner Sushi Bestellung");
         logger.info("liste init {}",s2);
 
-        m.addAttribute("meinesichtunge", meinesichtungen);
+        m.addAttribute("meinesichtungen", meinesichtungen);
         meinesichtungen.add(s1);
         meinesichtungen.add(s2);
     }
