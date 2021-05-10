@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<HTML xmlns:th="http://thymeleaf.org">
+        <head>
+            <h1>Bitte hau mal raus wo du ne 17 gesehen hast</h1>
+        </head>
+        <body>
+            <form th:action="@{/sichtung/meine/neu}" th:method="POST" th:object="${meinesichtungform}">
+                <label text="benutzer">Benutzer</label><br>
+                <input type="text" name="name" id="name" th:field="*{name}"/><br>
+                <label text="ort">Ort</label><br>
+                <input type="text" name="ort" id="ort" th:field="*{ort}"/><br>
+                <label text="beschreibung">Beschreibung</label><br>
+                <input type="text" name="beschreibung" id="beschreibung" th:field="*{beschreibung}"/><br>
+                <label text="datum">Datum</label><br>
+                <input type="date" name="datum" id="datum" th:field="*{datum}"/><br>
+                <div>
+                    <input type="submit"  value="OK">
+                </div>
+            </form>
+        </body>
+</HTML>
+
+<style>
+</style>

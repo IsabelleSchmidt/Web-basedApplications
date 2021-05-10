@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<HTML xmlns:th="http://thymeleaf.org">
+<HTML xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
         <head>
             <title >Sichtungen</title>
         </head>
@@ -15,18 +15,17 @@
                     <th>Bearbeiten</th>
                 </thead>
                 <tbody>
-                    <tr th:each="s : ${meinesichtungen}">
-                        <td th:text = "${s.getDatum()}"></td>
-                        <td th:text = "${s.getName()}"></td>
-                        <td th:text = "${s.getOrt()}"></td>
-                        <td th:text = "${s.getBeschreibung()}"></td>
-                    <!-- <td><a th:href="@{/angebote/{number}/del(number = ${angebote.indexOf(b)})}">[del]</a></td>
-                        <td><a th:href="@{/angebote/{number}(number = ${angebote.indexOf(b)})}">[edit]</a></td>
-                    -->
+                    <tr th:each="meinesichtungen:${meinesichtungen}">
+                        <td th:text = "${meinesichtungen.datum}"></td>
+                        <td th:text = "${meinesichtungen.name}"></td>
+                        <td th:text = "${meinesichtungen.ort}"></td>
+                        <td th:text = "${meinesichtungen.beschreibung}"></td>
+                        <td><a th:href="@{/sichtung/meine/{number}/del(number = ${number.index})}">[del]</a></td>
+                        <td><a th:href="@{/sichtung/meine/{number}(number = ${number.index})}">[edit]</a></td>
                     </tr>
                 </tbody>
             </table>
-    <!--<a th:href = "@{/angebote/neu}"><button>Lecker schmecker Braten braten</button></a>-->
+            <a th:href ="@{/sichtung/meine/neu}"><Button>Füg hinzu Bruder</Button></a>
         </body>
 </HTML>
 
