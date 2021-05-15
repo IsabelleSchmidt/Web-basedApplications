@@ -2,23 +2,28 @@
 <HTML xmlns:th="http://thymeleaf.org">
         <head>
             <h1>Bitte hau mal raus wo du ne 17 gesehen hast</h1>
+            <link rel="stylesheet" type="text/css" th:href="@{/stylesheet.css}"/>
         </head>
         <body>
             <form th:action="@{/sichtung/meine/neu}" th:method="POST" th:object="${meinesichtungform}">
                 <label text="benutzer">Benutzer</label><br>
-                <input type="text" name="name" id="name" th:field="*{name}"/><br>
+                <input type="text" name="name" id="name" th:field="*{name}" th:errorclass="notvalid"/><br>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br>
+                
                 <label text="ort">Ort</label><br>
-                <input type="text" name="ort" id="ort" th:field="*{ort}"/><br>
+                <input type="text" name="ort" id="ort" th:field="*{ort}" th:errorclass="notvalid"/><br>
+                <span th:if="${#fields.hasErrors('ort')}" th:errors="*{ort}"></span><br>
+                
                 <label text="beschreibung">Beschreibung</label><br>
-                <input type="text" name="beschreibung" id="beschreibung" th:field="*{beschreibung}"/><br>
+                <input type="text" name="beschreibung" id="beschreibung" th:field="*{beschreibung}" th:errorclass="notvalid"/><br>
+                <span th:if="${#fields.hasErrors('beschreibung')}" th:errors="*{beschreibung}"></span><br>
+            
                 <label text="datum">Datum</label><br>
-                <input type="date" name="datum" id="datum" th:field="*{datum}"/><br>
+                <input type="date" name="datum" id="datum" th:field="*{datum}" th:errorclass="notvalid"/><br>
+                <span th:if="${#fields.hasErrors('datum')}" th:errors="*{datum}"></span> <br>
                 <div>
                     <input type="submit"  value="OK">
                 </div>
             </form>
         </body>
 </HTML>
-
-<style>
-</style>

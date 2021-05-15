@@ -3,10 +3,13 @@ package de.hsrm.mi.web.projekt.sichtung;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,9 +71,14 @@ public class SichtungController {
     }
 
     @PostMapping("/sichtung/meine/neu")
-    public String postForm(@ModelAttribute("meinesichtungform") Sichtung sichtung,
+    public String postForm(@ModelAttribute("meinesichtungform") @Valid Sichtung sichtung, BindingResult bind,
                            @ModelAttribute("meinesichtungen") ArrayList<Sichtung> liste, Model m){  
-        logger.info("Olli ist toll");
+
+        if(bind.hasErrors()){
+            logger.info("Formular neu Ausfuellen");
+            m.addAttribute("meinesichtungform", sichtung);
+            return "sichtung/meine/bearbeiten";
+        }
         liste.add(sichtung);
         return "redirect:/sichtung/meine";
     }
