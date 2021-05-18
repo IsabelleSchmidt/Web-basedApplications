@@ -10,8 +10,6 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import de.hsrm.mi.web.projekt.validierung.Siebzehnhaft;
-
-
 public class Sichtung {
     
     @Size(min=3, message="{size}")
