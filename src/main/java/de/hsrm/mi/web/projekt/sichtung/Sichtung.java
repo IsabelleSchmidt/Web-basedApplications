@@ -1,8 +1,8 @@
 package de.hsrm.mi.web.projekt.sichtung;
 
+import java.beans.JavaBean;
 import java.time.LocalDate;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,22 +11,23 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import de.hsrm.mi.web.projekt.validierung.Siebzehnhaft;
 
+
 public class Sichtung {
     
-    @Size(min=3)
-    @NotBlank
+    @Size(min=3, message="{size}")
+    @NotBlank(message="{blank}")
     private String name;
     
-    @NotBlank
+    @NotBlank(message="{blank}")
     private String ort;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
+    @NotNull(message="{blank}")
     private LocalDate datum;
 
-    @Size(min = 0, max = 80)
+    @Size(min = 1, max = 80, message="{sizemax}")
     @NotBlank 
-    @Siebzehnhaft(message = "Hier ist leider keine 17 erwähnt")
+    @Siebzehnhaft(message="{siebzehnhaft.fehler}")
     private String beschreibung;
     
     public Sichtung(String name, String ort, LocalDate datum, String beschreibung) {

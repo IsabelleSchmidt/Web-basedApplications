@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <HTML xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
         <head>
-            <title >Sichtungen</title>
+            <title>Sichtungen</title>
         </head>
         <body>
-            <h1 >17 Sichtungen</h1>
+            <h1 th:text="#{sichtung.liste}">17 Sichtungen</h1>
             <table>
                 <thead>
-                    <th>Datum</th>
-                    <th>Name</th>
-                    <th>Ort</th>
-                    <th>Beschreibung</th>
-                    <th>Löschen</th>
-                    <th>Bearbeiten</th>
+                    <th th:text="#{sichtung.datum}">Datum</th>
+                    <th th:text="#{sichtung.name}">Name</th>
+                    <th th:text="#{sichtung.ort}">Ort</th>
+                    <th th:text="#{sichtung.beschreibung}">Beschreibung</th>
+                    <th th:text="#{sichtung.loeschen}">Löschen</th>
+                    <th th:text="#{sichtung.bearbeiten}">Bearbeiten</th>
                 </thead>
                 <tbody>
                     <tr th:each="meinesichtungen,number:${meinesichtungen}">
@@ -20,12 +20,12 @@
                         <td th:text = "${meinesichtungen.getName()}"></td>
                         <td th:text = "${meinesichtungen.getOrt()}"></td>
                         <td th:text = "${meinesichtungen.getBeschreibung()}"></td>
-                        <td><a th:href="@{/sichtung/meine/{number}/del(number = ${number.index})}">[del]</a></td>
-                        <td><a th:href="@{/sichtung/meine/{number}(number = ${number.index})}">[edit]</a></td>
+                        <td><a th:href="@{/sichtung/meine/{number}/del(number = ${number.index})}" th:text="#{sichtung.loeschen}">Löschen</a></td>
+                        <td><a th:href="@{/sichtung/meine/{number}(number = ${number.index})}" th:text="#{sichtung.bearbeiten}">Bearbeiten</a></td>
                     </tr>
                 </tbody>
             </table>
-            <a th:href ="@{/sichtung/meine/neu}"><Button>Füg hinzu Bruder</Button></a>
+            <a th:href ="@{/sichtung/meine/neu}"><Button th:text="#{sichtung.neu}">Füg hinzu Bruder</Button></a>
         </body>
 </HTML>
 
