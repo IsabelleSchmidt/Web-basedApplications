@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<HTML xmlns:th="http://thymeleaf.org">
+        <head>
+            <h1>Hier kanst du ein Foto hochladen</h1>
+        </head>
+        <body>
+            <div>
+                <form th:action="@{/foto}" th:method="POST" enctype="multipart/form-data">
+                    <input name="datei" type="file">
+                    <button type="submit" value="Upload">Upload</button>
+                </form>
+            </div>
+            <div>
+                <ul th:each="foto,id:${fotos}">
+                    <li th:text = "${foto.getDateiname()}"></li>
+                    <li th:text = "${foto.getZeitstempel()}"></li>
+                    <li><img th:src="@{/foto/{id}(id=${foto.getId()})}"></li>
+                    <a target="_blank" th:href="|https://www.openstreetmap.org/#map=17/${foto.geobreite}/${foto.geolaenge} |"
+                                       th:text="${foto.ort}">Schlumpfhausen</a>
+                    <button><a th:href="@{/foto/{id}/del(id=${foto.getId()})}" th:text="#{sichtung.loeschen}">Löschen</a></button>
+                </ul>
+            </div>
+        </body>
+</HTML>
