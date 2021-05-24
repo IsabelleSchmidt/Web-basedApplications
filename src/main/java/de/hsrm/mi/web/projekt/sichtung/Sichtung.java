@@ -1,6 +1,5 @@
 package de.hsrm.mi.web.projekt.sichtung;
 
-import java.beans.JavaBean;
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
