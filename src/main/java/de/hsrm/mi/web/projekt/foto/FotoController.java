@@ -23,9 +23,9 @@ public class FotoController {
     @Autowired
     private FotoService fotoService;
     
-    // public void setFotoservice(FotoService fotoService){
-    //     this.fotoService = fotoService;
-    // }
+    public void setFotoservice(FotoService fotoService){
+        this.fotoService = fotoService;
+    }
 
     @PostMapping("/foto")
     public String speicherFoto(MultipartFile datei, @ModelAttribute("fotos") ArrayList<Foto> fotol, Model m) throws IOException{
