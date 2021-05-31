@@ -1,16 +1,21 @@
 package de.hsrm.mi.web.projekt.foto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -37,6 +42,10 @@ public class Foto {
     @Lob
     @JsonIgnore
     private byte [] fotodaten;
+
+    @JsonIdentityReference(alwaysAsId = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Kommentar> kommentare = new ArrayList<Kommentar>();
 
     public String getMimetype() {
         return mimetype;
@@ -103,6 +112,15 @@ public class Foto {
         this.id = id;
     }
 
+    public List<Kommentar> getKommentare() {
+        return kommentare;
+    }
+
+    public void setKommentare(List<Kommentar> kommentare) {
+        this.kommentare = kommentare;
+    }
+
+    
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -115,6 +133,7 @@ public class Foto {
         temp = Double.doubleToLongBits(geolaenge);
         result = prime * result + (int) (temp ^ (temp >>> 32));
         result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + ((kommentare == null) ? 0 : kommentare.hashCode());
         result = prime * result + ((mimetype == null) ? 0 : mimetype.hashCode());
         result = prime * result + ((ort == null) ? 0 : ort.hashCode());
         result = prime * result + ((zeitstempel == null) ? 0 : zeitstempel.hashCode());
@@ -143,6 +162,11 @@ public class Foto {
             return false;
         if (id != other.id)
             return false;
+        if (kommentare == null) {
+            if (other.kommentare != null)
+                return false;
+        } else if (!kommentare.equals(other.kommentare))
+            return false;
         if (mimetype == null) {
             if (other.mimetype != null)
                 return false;
@@ -164,8 +188,11 @@ public class Foto {
     @Override
     public String toString() {
         return "Foto [dateiname=" + dateiname + ", fotodaten=" + Arrays.toString(fotodaten) + ", geobreite=" + geobreite
-                + ", geolaenge=" + geolaenge + ", id=" + id + ", mimetype=" + mimetype + ", ort=" + ort
-                + ", zeitstempel=" + zeitstempel + "]";
+                + ", geolaenge=" + geolaenge + ", id=" + id + ", kommentare=" + kommentare + ", mimetype=" + mimetype
+                + ", ort=" + ort + ", zeitstempel=" + zeitstempel + "]";
     }
+
+    
+
     
 }
