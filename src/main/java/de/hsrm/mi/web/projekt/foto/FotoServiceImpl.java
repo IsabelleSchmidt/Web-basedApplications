@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +54,7 @@ public class FotoServiceImpl implements FotoService{
     }
 
     @Override
+    @Transactional
     public void fotoKommentieren(long id, String autor, String kommentar) {
        
        try {
@@ -73,6 +76,7 @@ public class FotoServiceImpl implements FotoService{
     }
 
     @Override
+    @Transactional
     public void fotoKommentarLoeschen(long fotoid, long kid) {
     
         try {
@@ -83,7 +87,7 @@ public class FotoServiceImpl implements FotoService{
             for(int i = 0; i < foto.getKommentare().size(); i++){
                 kommentar = foto.getKommentare().get(i);
                 if(kommentar.getId() == kid){
-                    foto.getKommentare().remove(i);
+                    foto.getKommentare().remove(kommentar);
                 }
 
             }

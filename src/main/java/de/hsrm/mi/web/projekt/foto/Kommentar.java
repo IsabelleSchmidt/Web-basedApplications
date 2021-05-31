@@ -3,12 +3,17 @@ package de.hsrm.mi.web.projekt.foto;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class Kommentar {
     
+    @Id
+    @GeneratedValue
     private long id;
 
+    // @GeneratedValue
     private long version;
 
     private String autor = "";
