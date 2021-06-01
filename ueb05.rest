@@ -1,0 +1,20 @@
+GET http://numbersapi.com/17
+Content-Type: application/json
+
+###
+
+GET http://numbersapi.com/2020/year
+
+###
+
+GET https://www.mi.hs-rm.de/
+
+###
+
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+    "loginname": "marvin",
+    "passwort": "marvin6"
+}
