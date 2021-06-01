@@ -6,10 +6,10 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.hsrm.mi.web.projekt.utils.FotoBearbeitungService;
 
@@ -57,15 +57,15 @@ public class FotoServiceImpl implements FotoService{
     @Transactional
     public void fotoKommentieren(long id, String autor, String kommentar) {
        
-       try {
            Foto foto = fotoAbfragenNachId(id).get();
+        if(foto != null){
            Kommentar kommentarNew = new Kommentar();
            kommentarNew.setAutor(autor);
            kommentarNew.setText(kommentar); 
            foto.getKommentare().add(kommentarNew);
-       } catch (NoSuchElementException e) {
-           System.out.println("NoSuchElementException");
-       }
+        }else{
+            throw new NoSuchElementException();
+        }
     }
 
     @Override
@@ -79,22 +79,20 @@ public class FotoServiceImpl implements FotoService{
     @Transactional
     public void fotoKommentarLoeschen(long fotoid, long kid) {
     
-        try {
             Foto foto = fotoAbfragenNachId(fotoid).get();
             foto.getKommentare();
-            Kommentar kommentar = new Kommentar();
+            Kommentar kommentar;
 
             for(int i = 0; i < foto.getKommentare().size(); i++){
                 kommentar = foto.getKommentare().get(i);
                 if(kommentar.getId() == kid){
                     foto.getKommentare().remove(kommentar);
+                }else{
+                    throw new NoSuchElementException();
                 }
-
             }
 
-        } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException");
-        }
+        
     }
 
 }

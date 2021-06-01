@@ -2,6 +2,7 @@ package de.hsrm.mi.web.projekt.foto;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
+@SessionAttributes("loggedinusername")
 public class FotoController {
 
     Logger logger = LoggerFactory.getLogger(FotoController.class);
@@ -41,6 +46,16 @@ public class FotoController {
         return "foto/liste";
     }
 
+    @PostMapping("/foto/{id}/kommentar")
+    public String kommentarAusgeben(@RequestParam String kommentar,@PathVariable("id") Long id, Model m){
+                
+        if (kommentar!="" && m.containsAttribute("loggedinusername")) {
+            logger.info("Kommentar hinzugefügt");
+            fotoService.fotoKommentieren(id, m.getAttribute("loggedinusername").toString(), kommentar);
+        }
+        return "redirect:/foto/{id}/kommentar";
+    }
+
     @GetMapping("/foto")
     public String showFotos(@ModelAttribute("fotos") ArrayList<Foto> fotol, Model m){
         m.addAttribute("fotos", fotoService.alleFotosNachZeitstempelSortiert());
@@ -58,4 +73,19 @@ public class FotoController {
         fotoService.loescheFoto(id);
         return "redirect:/foto";
     }
+
+    @GetMapping("/foto/{id}/kommentar")
+    public String foto_id_kommentar_get(Model m, @PathVariable("id") Long id) {
+        
+        Optional<Foto> fotoOpt = fotoService.fotoAbfragenNachId(id);
+        if (!fotoOpt.isPresent()) {
+            return "foto/liste";
+        }
+        Foto foto = fotoOpt.get();
+
+        m.addAttribute("foto", foto);
+        m.addAttribute("kommentare", foto.getKommentare());
+        return "foto/kommentare";
+    }
+
 }
