@@ -20,7 +20,39 @@ POST http://localhost:8080/rest/spruches/
 
 ###
 
-DELETE http://localhost:8080/rest/spruches/1432
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "Petra",
+    "text": "hola", 
+    "anspruch": 80
+}
+
+
+###
+
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "Karl",
+    "text": "hallo", 
+    "anspruch": 120
+}
+
+
+###
+
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "Pascale",
+    "text": "Ich stinke", 
+    "anspruch": 55
+}
+
+###
+
+DELETE http://localhost:8080/rest/spruches/1431
 
 ###
 
@@ -31,3 +63,23 @@ PUT http://localhost:8080/rest/spruches/1429
     "text": "halli hallo", 
     "anspruch": 92
 }
+
+###
+
+GET http://localhost:8080/rest/spruches/?page=0&size=5&sort=anspruch,asc
+
+###
+
+GET http://localhost:8080/rest/spruches/?page=0&size=5&sort=name,desc
+
+###
+
+GET http://localhost:8080/rest/spruches/?page=2&size=5&sort=anspruch,asc
+
+###
+
+GET http://localhost:8080/rest/spruches/?page=0&size=5&sort=anspruch,asc
+
+###
+
+GET http://localhost:8080/rest/spruches/?page=1&size=5&sort=anspruch,asc
