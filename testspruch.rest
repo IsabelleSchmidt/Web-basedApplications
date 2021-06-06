@@ -1,0 +1,33 @@
+GET http://localhost:8080/rest
+
+###
+
+GET http://localhost:8080/rest/spruches/?page,size,sort
+
+###
+
+GET http://localhost:8080/rest/spruches
+
+###
+
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "Susi",
+    "text": "halli hallo", 
+    "anspruch": 75
+}
+
+###
+
+DELETE http://localhost:8080/rest/spruches/1432
+
+###
+
+PUT http://localhost:8080/rest/spruches/1429
+
+{
+    "name": "Susi",
+    "text": "halli hallo", 
+    "anspruch": 92
+}
