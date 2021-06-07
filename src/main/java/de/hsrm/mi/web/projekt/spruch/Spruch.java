@@ -1,8 +1,12 @@
 package de.hsrm.mi.web.projekt.spruch;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -10,13 +14,16 @@ public class Spruch {
     
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
     
-    String name = "";
-    String text = "";
-    int anspruch = 0;
+    private String name = "";
+    private String text = "";
+    private int anspruch = 0;
 
     Long version;
+
+    @OneToMany(mappedBy="spruch")
+    private Collection<Tag> tags = new HashSet<Tag>();
 
     public String getName() {
         return name;

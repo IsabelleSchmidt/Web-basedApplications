@@ -83,3 +83,63 @@ GET http://localhost:8080/rest/spruches/?page=0&size=5&sort=anspruch,asc
 ###
 
 GET http://localhost:8080/rest/spruches/?page=1&size=5&sort=anspruch,asc
+
+###
+
+GET http://localhost:8080/rest/tags
+
+###
+
+POST http://localhost:8080/rest/tags/
+
+{
+    "name": "duoop"
+}
+
+###
+
+POST http://localhost:8080/rest/tags/
+
+{
+    "name": "was geht"
+}
+
+###
+
+POST http://localhost:8080/rest/tags/
+
+{
+    "name": "hallo"
+}
+
+#Aufgabe 7
+
+###
+
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "Cathi",
+    "text": "Ich ziehe bald in mein neues Haus", 
+    "anspruch": 60
+}
+
+###
+
+GET http://localhost:8080/rest/spruches/1498/tags
+
+###
+
+POST http://localhost:8080/rest/spruches/1/tags
+Content-Type: text/uri-list
+
+http://localhost:8080/rest/tags/4
+
+###
+
+GET http://localhost:8080/rest/spruches/1498/tags
+
+###
+
+#DELETE ....
+
