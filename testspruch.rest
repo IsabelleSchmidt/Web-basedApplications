@@ -115,7 +115,7 @@ POST http://localhost:8080/rest/tags/
 #Aufgabe 7
 
 ###
-
+#POST für spruch entität erstellen
 POST http://localhost:8080/rest/spruches/
 
 {
@@ -125,19 +125,30 @@ POST http://localhost:8080/rest/spruches/
 }
 
 ###
-
-GET http://localhost:8080/rest/spruches/1498/tags
+#mit get abrufen
+GET http://localhost:8080/rest/spruches/1852
 
 ###
+#tag erstellen mit POST
 
-POST http://localhost:8080/rest/spruches/1/tags
+POST http://localhost:8080/rest/tags/
+
+{
+    "name": "ha"
+}
+
+###
+POST http://localhost:8080/rest/spruches/1852/tags
 Content-Type: text/uri-list
 
-http://localhost:8080/rest/tags/4
+http://localhost:8080/rest/tags/1858
+###
+
+GET http://localhost:8080/rest/spruches/1852
 
 ###
 
-GET http://localhost:8080/rest/spruches/1498/tags
+GET http://localhost:8080/rest/spruches/1852/tags
 
 ###
 

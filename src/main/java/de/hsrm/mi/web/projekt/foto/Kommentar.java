@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 public class Kommentar {
@@ -14,6 +15,7 @@ public class Kommentar {
     private long id;
 
     // @GeneratedValue
+    @Version
     private long version;
 
     private String autor = "";
