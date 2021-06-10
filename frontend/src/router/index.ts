@@ -12,6 +12,13 @@ const routes: Array<RouteRecordRaw> = [
     path: '/about',
     name: 'AboutView',
     component: AboutView
+  },
+  { 
+    path: '/404', 
+    component: () => import('../components/NotFound.vue') 
+  },
+  {
+    path: '/:catchAll(.*)', redirect:'404'
   }
 ]
 
