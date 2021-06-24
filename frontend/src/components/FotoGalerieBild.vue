@@ -2,7 +2,7 @@
   <div class="card column is-3 has-background-grey-lighter m-3">
     <div class="card-header">
       <p class="card-header-title is-centered">
-        <!-- Dateinamen ausgeben -->
+        {{foto.dateiname}} 
       </p>
       <!-- Lösch-Button -->
       <button class="button card-header-icon has-background-grey-light">
@@ -17,10 +17,8 @@
       <div class="content">
         <foto-star-rating :maxsterne="5" />
       </div>
-      <!-- Ort -->
-      <div class="content">Irgendwo</div>
-      <!-- Zeitstempel -->
-      <div class="has-text-grey">Irgendwann</div>
+      <div class="content">Ort: {{foto.ort}}</div>
+      <div class="has-text-grey">Zeitstempel: {{foto.zeitstempel}}</div>
     </div>
   </div>
 </template>
@@ -29,16 +27,19 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
 import FotoStarRating from "./FotoStarRating.vue";
-import { Foto } from "@/services/Foto";
+import { Foto } from "../services/Foto";
+import { fotoliste } from "../services/FotoListe";
 
 export default defineComponent({
   components: { FotoStarRating },
   name: "FotoGalerieBild",
+  props:{
+    foto: {type: Object as PropType<Foto>,required: true}
+  },
   setup(props, context) {
 
-    
     return {
-      url: require("@/assets/thumbnails/DerTupel.png")
+      url: require("../assets/thumbnails/DerTupel.png")
     };
   }
 });

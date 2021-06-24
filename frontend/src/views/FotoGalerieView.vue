@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import FotoGalerie from "@/components/FotoGalerie.vue";
+import FotoGalerie from "../components/FotoGalerie.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
