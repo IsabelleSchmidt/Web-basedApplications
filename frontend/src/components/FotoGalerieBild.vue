@@ -5,7 +5,7 @@
         {{foto.dateiname}} 
       </p>
       <!-- Lösch-Button -->
-      <button class="button card-header-icon has-background-grey-light">
+      <button class="button card-header-icon has-background-grey-light" @click="delclicked">
         <i class="fa fa-times" />
       </button>
     </div>
@@ -38,8 +38,13 @@ export default defineComponent({
   },
   setup(props, context) {
 
+    function delclicked(){
+      context.emit("delete-zeile", props.foto.id);
+    }
+
     return {
-      url: require("../assets/thumbnails/DerTupel.png")
+      delclicked,
+      url: require("../assets/thumbnails/"+props.foto.dateiname)
     };
   }
 });

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- Button zum Hinzufügen des nächsten Bildes -->
-    <button class="button" v-on:click="gelickt()">
+    <button class="button" v-on:click="geklickt()">
       Neues Bild hinzufügen
       <i class="fas fa-camera" />
     </button>
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref } from "vue";
+import { computed, defineComponent, Ref, ref } from "vue";
 import FotoGalerieBild from "./FotoGalerieBild.vue";
 import { Foto } from "../services/Foto";
 import { fotoliste } from "../services/FotoListe";
@@ -31,12 +31,23 @@ export default defineComponent({
   components:{
     FotoGalerieBild
   },
-  setup(){
+  setup(props){
     
-      const fotos: Ref<Foto[]> = ref(fotoliste);
+    const fotos: Ref<Foto[]> = ref([]);
+
+    let i = 0;
+
+    function geklickt() {
+      if (i<fotoliste.length) {
+        fotos.value.push(fotoliste[i])
+        i++;
+      }
+      else alert("Keine Fotos mehr")
+    }
 
     return{
-      fotos
+      fotos,
+      geklickt
     }
   }
 
