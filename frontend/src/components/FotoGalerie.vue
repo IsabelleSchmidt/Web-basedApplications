@@ -7,12 +7,12 @@
     </button>
     <!-- Eingabefeld für inkrementelle Suche -->
     <section class="section">
-      <input type="text" class="input" placeholder="Suche" />
+      <input type="text" class="input" v-model="suchbegriff" placeholder="Suche" />
     </section>
     <section class="section">
       <div class="columns is-multiline">
         <ul>
-          <FotoGalerieBild :foto="f" v-for="f in fotos" :key="f.id"/> 
+          <FotoGalerieBild :foto="f" v-for="f in fotos" :key="f.id" @entferne-zeile="delFoto($event)"/> 
         </ul>
       </div>
     </section>
@@ -45,9 +45,25 @@ export default defineComponent({
       else alert("Keine Fotos mehr")
     }
 
+    const suchbegriff = ref("")
+    const displayfotos =  computed( () => {
+      if (suchbegriff.value.length < 3) {
+        return fotos.value;
+      } else {
+        return fotos.value.filter(e => e.ort.toLowerCase().includes(suchbegriff.value.toLowerCase()) );
+      }
+    })
+
+    function delFoto(id: number): void{
+      fotos.value = fotos.value.filter(ele => ele.id !== id);
+    }
+
+
     return{
-      fotos,
-      geklickt
+      fotos: displayfotos,
+      geklickt,
+      delFoto,
+      suchbegriff
     }
   }
 

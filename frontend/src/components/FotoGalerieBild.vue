@@ -39,7 +39,7 @@ export default defineComponent({
   setup(props, context) {
 
     function delclicked(){
-      context.emit("delete-zeile", props.foto.id);
+      context.emit("entferne-zeile", props.foto.id);
     }
 
     return {
