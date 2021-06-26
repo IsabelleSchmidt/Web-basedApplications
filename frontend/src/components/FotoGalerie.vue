@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div class="notification is-danger" v-if="fotostate.errormessage != '' ">
+      {{fotostate.errormessage}}
+    </div>
     <!-- Button zum Hinzufügen des nächsten Bildes -->
     <button class="button" v-on:click="geklickt()">
       Neues Bild hinzufügen
@@ -15,6 +18,7 @@
           <FotoGalerieBild :foto="f" v-for="f in fotos" :key="f.id" @entferne-zeile="delFoto($event)"/> 
         </ul>
       </div>
+      <span> Insgesamt {{anzahl}} Bilder</span>
     </section>
   </div>
 </template>
@@ -24,6 +28,7 @@ import { computed, defineComponent, Ref, ref } from "vue";
 import FotoGalerieBild from "./FotoGalerieBild.vue";
 import { Foto } from "../services/Foto";
 import { fotoliste } from "../services/FotoListe";
+import {useFotoStore} from "../services/FotoStore";
 
 export default defineComponent({
   name: "FotoGalerie",
@@ -32,20 +37,24 @@ export default defineComponent({
     FotoGalerieBild
   },
   setup(props){
-    
-    const fotos: Ref<Foto[]> = ref([]);
 
+    const {fotostate, addListeZeile} = useFotoStore();
+
+    const fotos: Ref<Foto[]> = ref([]);
+    const suchbegriff = ref("")
+    const anzahl = computed(() => fotostate.liste.length)
     let i = 0;
 
     function geklickt() {
       if (i<fotoliste.length) {
-        fotos.value.push(fotoliste[i])
+        fotos.value.push(fotoliste[i]);
+        addListeZeile(fotoliste[i])
         i++;
       }
       else alert("Keine Fotos mehr")
     }
 
-    const suchbegriff = ref("")
+
     const displayfotos =  computed( () => {
       if (suchbegriff.value.length < 3) {
         return fotos.value;
@@ -58,12 +67,19 @@ export default defineComponent({
       fotos.value = fotos.value.filter(ele => ele.id !== id);
     }
 
+    // const fotoListe = computed(() => {
+    //   return fotostate.liste.length;
+    // });
+
 
     return{
       fotos: displayfotos,
       geklickt,
       delFoto,
-      suchbegriff
+      suchbegriff,
+      // fotoListe,
+      fotostate,
+      anzahl
     }
   }
 
@@ -75,3 +91,7 @@ export default defineComponent({
 <style scoped>
 
 </style>
+
+function useFotoStore(): { liste: any; update: any; errormessage: any; remove: any; } {
+  throw new Error("Function not implemented.");
+}
