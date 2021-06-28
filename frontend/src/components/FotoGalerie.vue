@@ -3,12 +3,10 @@
     <div class="notification is-danger" v-if="fotostate.errormessage != '' ">
       {{fotostate.errormessage}}
     </div>
-    <!-- Button zum Hinzufügen des nächsten Bildes -->
     <button class="button" v-on:click="geklickt()">
       Neues Bild hinzufügen
       <i class="fas fa-camera" />
     </button>
-    <!-- Eingabefeld für inkrementelle Suche -->
     <section class="section">
       <input type="text" class="input" v-model="suchbegriff" placeholder="Suche" />
     </section>
@@ -42,7 +40,7 @@ export default defineComponent({
 
     const fotos: Ref<Foto[]> = ref([]);
     const suchbegriff = ref("")
-    const anzahl = computed(() => fotostate.liste.length)
+    const anzahl = computed(() => fotostate.fotos.length)
     let i = 0;
 
     function geklickt() {

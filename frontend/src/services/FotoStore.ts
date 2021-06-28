@@ -6,16 +6,40 @@ import { Foto } from './Foto'
 // Oft auch mit einem reactive()-Objekt gelöst
 
     const fotostate = reactive({
-        liste: Array<Foto>(), 
+        fotos: Array<Foto>(), 
         errormessage: ""
     })
     // Composition-Function zur Bereitstellung
     // von State-Abfrage- und Bearbeitungsmoeglichkeiten
     
+    async function updateFotos() {
+        const fotoliste = new Array<Foto>();
+
+        fetch(`http://localhost:9090/api/foto`,{
+            method: 'GET'
+        })
+        .then((response)=>{
+            if(!response.ok){
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((jsondata: Array<Foto>)=>{
+            for(let i=0; i < jsondata.length; i++){
+                fotoliste.push(jsondata[i]);
+            }
+            fotostate.fotos = fotoliste;
+            fotostate.errormessage ="";
+        })
+        .catch((fehler)=>{
+            fehler.fotostate.errormessage ="Fehler bei der Serverkommunikation";
+        });
+    }
+
     export function useFotoStore() {
         
         function addListeZeile(f: Foto): void{
-            fotostate.liste.push(f)
+            fotostate.fotos.push(f)
         }
 
         return{
