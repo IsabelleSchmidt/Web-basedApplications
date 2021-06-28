@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from "vue";
+import { computed, defineComponent, onMounted, Ref, ref } from "vue";
 import FotoGalerieBild from "./FotoGalerieBild.vue";
 import { Foto } from "../services/Foto";
 import { fotoliste } from "../services/FotoListe";
@@ -36,16 +36,15 @@ export default defineComponent({
   },
   setup(props){
 
-    const {fotostate, addListeZeile} = useFotoStore();
+    const {fotostate, addListeZeile, updateFotos} = useFotoStore();
 
-    const fotos: Ref<Foto[]> = ref([]);
+    // const fotos: Ref<Foto[]> = ref([]);
     const suchbegriff = ref("")
     const anzahl = computed(() => fotostate.fotos.length)
     let i = 0;
 
     function geklickt() {
       if (i<fotoliste.length) {
-        fotos.value.push(fotoliste[i]);
         addListeZeile(fotoliste[i])
         i++;
       }
@@ -55,15 +54,19 @@ export default defineComponent({
 
     const displayfotos =  computed( () => {
       if (suchbegriff.value.length < 3) {
-        return fotos.value;
+        return fotostate.fotos;
       } else {
-        return fotos.value.filter(e => e.ort.toLowerCase().includes(suchbegriff.value.toLowerCase()) );
+        return fotostate.fotos.filter(e => e.ort.toLowerCase().includes(suchbegriff.value.toLowerCase()) );
       }
     })
 
-    function delFoto(id: number): void{
-      fotos.value = fotos.value.filter(ele => ele.id !== id);
-    }
+    // function delFoto(id: number): void{
+    //   fotostate.fotos = fotostate.fotos.filter(ele => ele.id !== id);
+    // }
+
+    onMounted(async () => {
+      await updateFotos();
+    });
 
     // const fotoListe = computed(() => {
     //   return fotostate.liste.length;
@@ -73,7 +76,7 @@ export default defineComponent({
     return{
       fotos: displayfotos,
       geklickt,
-      delFoto,
+      // delFoto,
       suchbegriff,
       // fotoListe,
       fotostate,

@@ -15,13 +15,14 @@ import { Foto } from './Foto'
     async function updateFotos() {
         const fotoliste = new Array<Foto>();
 
-        fetch(`http://localhost:9090/api/foto`,{
+        fetch(`http://localhost:8080/api/foto`,{
             method: 'GET'
         })
         .then((response)=>{
             if(!response.ok){
                 throw new Error(response.statusText);
             }
+            fotostate.errormessage ="";
             return response.json();
         })
         .then((jsondata: Array<Foto>)=>{
@@ -29,11 +30,27 @@ import { Foto } from './Foto'
                 fotoliste.push(jsondata[i]);
             }
             fotostate.fotos = fotoliste;
-            fotostate.errormessage ="";
         })
         .catch((fehler)=>{
             fehler.fotostate.errormessage ="Fehler bei der Serverkommunikation";
         });
+    }
+
+    async function deleteFoto(id: number) {
+        
+        fetch(`http://localhost:8080/api/foto/${id}`, {
+            method:'DELETE'
+          })
+          .then((response)=>{
+            if(!response.ok){
+              throw new Error(fotostate.errormessage);
+            }
+            fotostate.errormessage = "";
+            updateFotos();
+          })
+          .catch((fehler)=>{
+            fotostate.errormessage = fehler;
+          })
     }
 
     export function useFotoStore() {
@@ -44,7 +61,9 @@ import { Foto } from './Foto'
 
         return{
             fotostate: readonly(fotostate),
-            addListeZeile
+            addListeZeile,
+            updateFotos,
+            deleteFoto
         }
     }
         //functionaddListeZeile(s: string): void {state.liste.push(s)}

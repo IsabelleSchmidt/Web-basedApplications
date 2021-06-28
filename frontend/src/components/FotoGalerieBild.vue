@@ -44,7 +44,7 @@ export default defineComponent({
 
     return {
       delclicked,
-      url: require("../assets/thumbnails/"+props.foto.dateiname)
+      url: "http://localhost:9090/api/foto/{id}"
     };
   }
 });
