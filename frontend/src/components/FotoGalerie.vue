@@ -88,6 +88,3 @@ export default defineComponent({
 
 </style>
 
-function useFotoStore(): { liste: any; update: any; errormessage: any; remove: any; } {
-  throw new Error("Function not implemented.");
-}
