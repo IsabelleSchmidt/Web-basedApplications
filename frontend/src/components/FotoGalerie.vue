@@ -11,8 +11,8 @@
       <input type="text" class="input" v-model="suchbegriff" placeholder="Suche" />
     </section>
     <section class="section">
-      <div class="columns is-multiline">
-        <ul>
+      <div class="columns">
+        <ul id="foto">
           <FotoGalerieBild :foto="f" v-for="f in fotos" :key="f.id" @entferne-zeile="delFoto($event)"/> 
         </ul>
       </div>
@@ -84,7 +84,18 @@ export default defineComponent({
 </script>
 
 
-<style scoped>
+<style>
 
+  #foto{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .colums{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 </style>
 
