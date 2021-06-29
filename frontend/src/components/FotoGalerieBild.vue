@@ -4,7 +4,6 @@
       <p class="card-header-title is-centered">
         {{foto.dateiname}} 
       </p>
-      <!-- Lösch-Button -->
       <button class="button card-header-icon has-background-grey-light" @click="delclicked">
         <i class="fa fa-times" />
       </button>
@@ -44,7 +43,7 @@ export default defineComponent({
 
     return {
       delclicked,
-      url: "http://localhost:9090/api/foto/{id}"
+      url: "http://localhost:8080/api/foto"
     };
   }
 });

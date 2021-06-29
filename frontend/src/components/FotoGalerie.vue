@@ -36,7 +36,7 @@ export default defineComponent({
   },
   setup(props){
 
-    const {fotostate, addListeZeile, updateFotos} = useFotoStore();
+    const {fotostate, addListeZeile, updateFotos, deleteFoto} = useFotoStore();
 
     // const fotos: Ref<Foto[]> = ref([]);
     const suchbegriff = ref("")
@@ -60,23 +60,18 @@ export default defineComponent({
       }
     })
 
-    // function delFoto(id: number): void{
-    //   fotostate.fotos = fotostate.fotos.filter(ele => ele.id !== id);
-    // }
+    function delFoto(id: number): void{
+      deleteFoto(id);
+    }
 
     onMounted(async () => {
       await updateFotos();
     });
 
-    // const fotoListe = computed(() => {
-    //   return fotostate.liste.length;
-    // });
-
-
     return{
       fotos: displayfotos,
       geklickt,
-      // delFoto,
+      delFoto,
       suchbegriff,
       // fotoListe,
       fotostate,

@@ -66,6 +66,7 @@ import { Foto } from './Foto'
             deleteFoto
         }
     }
-        //functionaddListeZeile(s: string): void {state.liste.push(s)}
+    
+    //functionaddListeZeile(s: string): void {state.liste.push(s)}
     
         
