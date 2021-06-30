@@ -1,5 +1,6 @@
 package de.hsrm.mi.web.projekt.foto;
 
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -8,10 +9,12 @@ import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.hsrm.mi.web.projekt.utils.FotoBearbeitungService;
+import de.hsrm.mi.web.projekt.messaging.FotoMessage;
 
 @Service
 public class FotoServiceImpl implements FotoService{
@@ -20,13 +23,17 @@ public class FotoServiceImpl implements FotoService{
     private FotoBearbeitungService fbservice;
     
     @Autowired
-    FotoRepository fotorepo;
+    private FotoRepository fotorepo;
+
+    @Autowired
+    private SimpMessagingTemplate broker;
     
     @Override
     public Foto fotoAbspeichern(Foto foto) {
         fbservice.aktualisiereMetadaten(foto);
         fbservice.orientiereFoto(foto);
         Foto neu = fotorepo.save(foto);
+        broker.convertAndSend("/topic/foto", new FotoMessage(FotoMessage.FOTO_GESPEICHERT, neu.getId()));
         return neu;
     }
     
@@ -46,6 +53,7 @@ public class FotoServiceImpl implements FotoService{
     @Override
     public void loescheFoto(Long id) {   
         Foto foto = fotoAbfragenNachId(id).get();
+        broker.convertAndSend("/topic/foto", new FotoMessage(FotoMessage.FOTO_GELOESCHT, foto.getId()));
         fotorepo.delete(foto);     
     }
 
