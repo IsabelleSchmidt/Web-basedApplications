@@ -13,7 +13,7 @@
     <section class="section">
       <div class="columns">
         <ul id="foto">
-          <FotoGalerieBild :foto="f" v-for="f in fotos" :key="f.id" @entferne-zeile="delFoto($event)"/> 
+          <FotoGalerieBild :foto="f" v-for="f in fotostate.fotos" :key="f.id" @entferne-zeile="delFoto($event)"/> 
         </ul>
       </div>
       <span> Insgesamt {{anzahl}} Bilder</span>
@@ -44,8 +44,8 @@ export default defineComponent({
     let i = 0;
 
     function geklickt() {
-      if (i<fotoliste.length) {
-        addListeZeile(fotoliste[i])
+      if (i<fotostate.fotos.length) {
+        addListeZeile(FotoGalerieBild[i])
         i++;
       }
       else alert("Keine Fotos mehr")
