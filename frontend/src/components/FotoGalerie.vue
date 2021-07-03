@@ -44,11 +44,7 @@ export default defineComponent({
     let i = 0;
 
     function geklickt() {
-      if (i<fotostate.fotos.length) {
-        addListeZeile(FotoGalerieBild[i])
-        i++;
-      }
-      else alert("Keine Fotos mehr")
+      location.reload();
     }
 
     const displayfotos =  computed( () => {
@@ -68,17 +64,21 @@ export default defineComponent({
     });
 
     return{
+      fotos: fotostate.fotos,
       geklickt,
+      displayfotos,
       delFoto,
       suchbegriff,
       fotostate,
-      anzahl
+      anzahl,
+      updateFotos
     }
   }
 
   
 });
 </script>
+
 
 <style>
 

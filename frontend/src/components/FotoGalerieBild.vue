@@ -27,7 +27,6 @@
 import { defineComponent, PropType, ref } from "vue";
 import FotoStarRating from "./FotoStarRating.vue";
 import { Foto } from "../services/Foto";
-import { fotoliste } from "../services/FotoListe";
 
 export default defineComponent({
   components: { FotoStarRating },
@@ -43,7 +42,7 @@ export default defineComponent({
 
     return {
       delclicked,
-      url: "http://localhost:9090/api/foto"
+      url: ("http://localhost:8080/foto/" + props.foto.id)
     };
   }
 });
