@@ -51,7 +51,6 @@ export default defineComponent({
       else alert("Keine Fotos mehr")
     }
 
-
     const displayfotos =  computed( () => {
       if (suchbegriff.value.length < 3) {
         return fotostate.fotos;
@@ -69,11 +68,9 @@ export default defineComponent({
     });
 
     return{
-      fotos: displayfotos,
       geklickt,
       delFoto,
       suchbegriff,
-      // fotoListe,
       fotostate,
       anzahl
     }
@@ -82,7 +79,6 @@ export default defineComponent({
   
 });
 </script>
-
 
 <style>
 

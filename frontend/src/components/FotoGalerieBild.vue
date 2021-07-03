@@ -43,7 +43,7 @@ export default defineComponent({
 
     return {
       delclicked,
-      url: "http://localhost:8080/api/foto"
+      url: "http://localhost:9090/api/foto"
     };
   }
 });

@@ -1,9 +1,5 @@
 import{ computed, reactive, readonly } from 'vue'
 import { Foto } from './Foto'
-// Gemeinsame State-Variable(n) auf oberster Ebene,
-// also ausserhalb der use-Funktion (dürfen nur je
-// einmal und nicht nicht je use-Aufruf angelegt werden)
-// Oft auch mit einem reactive()-Objekt gelöst
 
     const fotostate = reactive({
         fotos: Array<Foto>(), 
@@ -15,7 +11,7 @@ import { Foto } from './Foto'
     async function updateFotos() {
         const fotoliste = new Array<Foto>();
 
-        fetch(`http://localhost:8080/api/foto`,{
+        fetch(`/api/foto`,{
             method: 'GET'
         })
         .then((response)=>{
@@ -38,7 +34,7 @@ import { Foto } from './Foto'
 
     async function deleteFoto(id: number) {
         
-        fetch(`http://localhost:8080/api/foto/${id}`, {
+        fetch(`/api/foto/${id}`, {
             method:'DELETE'
           })
           .then((response)=>{
