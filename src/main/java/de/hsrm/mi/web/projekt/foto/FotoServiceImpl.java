@@ -27,13 +27,20 @@ public class FotoServiceImpl implements FotoService{
 
     @Autowired
     private SimpMessagingTemplate broker;
+
+    @Autowired
+    private AdressService adressService;
     
     @Override
     public Foto fotoAbspeichern(Foto foto) {
         fbservice.aktualisiereMetadaten(foto);
         fbservice.orientiereFoto(foto);
+        
+        Optional<String> ortN = adressService.findeAdresse(foto.getGeobreite(), foto.getGeolaenge());
+        foto.setOrt(ortN.get());
+        
         Foto neu = fotorepo.save(foto);
-        broker.convertAndSend("/topic/foto", new FotoMessage(FotoMessage.FOTO_GESPEICHERT, neu.getId()));
+        broker.convertAndSend("/topic/foto", new FotoMessage("FOTO_GESPEICHERT", neu.getId()));
         return neu;
     }
     
@@ -53,8 +60,8 @@ public class FotoServiceImpl implements FotoService{
     @Override
     public void loescheFoto(Long id) {   
         Foto foto = fotoAbfragenNachId(id).get();
-        broker.convertAndSend("/topic/foto", new FotoMessage(FotoMessage.FOTO_GELOESCHT, foto.getId()));
-        fotorepo.delete(foto);     
+        broker.convertAndSend("/topic/foto", new FotoMessage("FOTO_GELOESCHT", foto.getId()));
+        fotorepo.delete(foto);    
     }
 
     public void setFbservice(FotoBearbeitungService fbservice) {

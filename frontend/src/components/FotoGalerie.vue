@@ -84,8 +84,10 @@ export default defineComponent({
 
   #foto{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .colums{

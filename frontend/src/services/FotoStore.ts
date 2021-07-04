@@ -1,12 +1,17 @@
-import{ computed, reactive, readonly } from 'vue'
+import { Client } from '@stomp/stompjs';
+import{ reactive, readonly } from 'vue'
 import { Foto } from './Foto'
+import { FotoMessage } from './FotoMessage';
 
     const fotostate = reactive({
         fotos: Array<Foto>(), 
-        errormessage: ""
+        errormessage: ""    
     })
-    // Composition-Function zur Bereitstellung
-    // von State-Abfrage- und Bearbeitungsmoeglichkeiten
+
+    const wsurl = "ws://localhost:9090/messagebroker";
+    const DEST = "/topic/foto";
+
+    const stompclient = new Client({brokerURL: wsurl})
     
     async function updateFotos() {
         const fotoliste = new Array<Foto>();
@@ -49,6 +54,23 @@ import { Foto } from './Foto'
           })
     }
 
+    stompclient.onStompError = (frame) => {
+        console.log(frame)
+    }
+    stompclient.onConnect = () => {
+        stompclient.subscribe(DEST, (message) => {
+            const f = JSON.parse(message.body) as FotoMessage
+
+        if(f.operation == "FOTO_GESPEICHERT"){
+            updateFotos();
+        }else if(f.operation == "FOTO_GELOESCHT"){
+            deleteFoto(f.id)
+        }
+    });
+    };
+
+    stompclient.activate();
+
     export function useFotoStore() {
         
         function addListeZeile(f: Foto): void{
@@ -59,7 +81,8 @@ import { Foto } from './Foto'
             fotostate: readonly(fotostate),
             addListeZeile,
             updateFotos,
-            deleteFoto
+            deleteFoto,
+            stompclient
         }
     }
     
