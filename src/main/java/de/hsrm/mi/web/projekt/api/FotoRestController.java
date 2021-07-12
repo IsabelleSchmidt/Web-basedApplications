@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,12 @@ public class FotoRestController {
         if(fotoService.fotoAbfragenNachId(id).isPresent()){
             fotoService.loescheFoto(id);
         }
+    }
+
+    @GetMapping("/foto/{id}")
+    public ResponseEntity<byte[]> getFotoById(@PathVariable("id") Long id){
+        Foto foto = fotoService.fotoAbfragenNachId(id).get();
+        return ResponseEntity.ok().header("Content-Type", foto.getMimetype()).body(foto.getFotodaten());
     }
 
     @GetMapping("/foto/{id}/kommentar")

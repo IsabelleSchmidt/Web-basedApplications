@@ -42,7 +42,7 @@ export default defineComponent({
 
     return {
       delclicked,
-      url: ("http://localhost:8080/foto/" + props.foto.id)
+      url: ("api/foto/" + props.foto.id)
     };
   }
 });
