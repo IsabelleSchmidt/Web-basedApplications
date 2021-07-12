@@ -11,11 +11,11 @@
                 <br>
                 <a target="_blank" th:href="|https://www.openstreetmap.org/#map=17/${foto.geobreite}/${foto.geolaenge}|" th:text="${foto.getOrt()}">Schlumpfhausen</a>
                 <br>
-                <a th:text="#{foto.del}" th:href="@{/foto/{id}/del(id = ${foto.getId()})}"></a>
+                <a th:text="#{sichtung.loeschen}" th:href="@{/foto/{id}/del(id = ${foto.getId()})}"></a>
             </div>
         
             <div>
-                <h2 th:text="#{foto.comment.list.title}"></h2>
+                <h2 th:text="Kommentare"></h2>
                 <div th:each="kommentar: ${kommentare}" class="lightbox">
                     <div>
                         <h2 th:text="${kommentar.getAutor()}"></h2>
@@ -26,14 +26,14 @@
             </div>
         
             <div th:if="${loggedinusername}">
-                <h1 th:text="#{foto.comment.form.title}"></h1>
+                <h1 th:text="Kommentare eingeben"></h1>
                 <form class="form" th:action="@{/foto/{id}/kommentar(id = ${foto.getId()})}" th:method="POST">
                     <div class="inputdiv">
-                        <label th:text="#{foto.comment.form.text}"></label>
-                        <input class="input" type="text" name="kommentar" placeholder=""/>
+                        <label th:text="Kommentar Text"></label>
+                        <input class="input" type="text" name="kommentar" placeholder="hier"/>
                     </div>
                     <div>
-                        <input class="submit" th:value="#{form.send}" type="submit">
+                        <input class="submit" th:value="Senden" type="submit">
                     </div>
                 </form>
             </div>

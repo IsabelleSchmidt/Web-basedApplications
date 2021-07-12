@@ -1,6 +1,7 @@
 package de.hsrm.mi.web.projekt.foto;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class FotoController {
     }
 
     @PostMapping("/foto")
-    public String speicherFoto(MultipartFile datei, @ModelAttribute("fotos") ArrayList<Foto> fotol, Model m) throws IOException{
+    public String speicherFoto( MultipartFile datei, @ModelAttribute("fotos") ArrayList<Foto> fotol, Model m) throws IOException{
         logger.error("Er ist im POST drin von FotoController");
         Foto foto = new Foto();
         foto.setDateiname(datei.getOriginalFilename());
@@ -46,17 +47,27 @@ public class FotoController {
     }
 
     @PostMapping("/foto/{id}/kommentar")
-    public String kommentarAusgeben(@RequestParam String kommentar,@PathVariable("id") Long id, Model m){
+    public String kommentarAusgeben(@RequestParam String kommentar,@PathVariable("id") Long id, Model m, Principal p){
                 
         if (kommentar!="" && m.containsAttribute("loggedinusername")) {
             logger.info("Kommentar hinzugefügt");
+            fotoService.fotoKommentieren(id, m.getAttribute("loggedinusername").toString(), kommentar);
+        }else if(!m.containsAttribute("loggedinusername")){
+            m.addAttribute("loggedinusername", p.getName());
             fotoService.fotoKommentieren(id, m.getAttribute("loggedinusername").toString(), kommentar);
         }
         return "redirect:/foto/{id}/kommentar";
     }
 
     @GetMapping("/foto")
-    public String showFotos(@ModelAttribute("fotos") ArrayList<Foto> fotol, Model m){
+    public String showFotos(@ModelAttribute("fotos") ArrayList<Foto> fotol, Model m, Principal p){
+
+        m.addAttribute("userName", "eingelogged als " + p.getName());
+
+        if(!m.containsAttribute("loggedinusername")){
+            m.addAttribute("loggedinusername", p.getName());
+        }
+
         m.addAttribute("fotos", fotoService.alleFotosNachZeitstempelSortiert());
         return "foto/liste";
     }
@@ -74,8 +85,13 @@ public class FotoController {
     }
 
     @GetMapping("/foto/{id}/kommentar")
-    public String foto_id_kommentar_get(Model m, @PathVariable("id") Long id) {
+    public String foto_id_kommentar_get(Model m, @PathVariable("id") Long id, Principal p) {
         
+        if(!m.containsAttribute("loggedinusername")){
+            String loginname = p.getName();
+            m.addAttribute("loggedinusername", loginname);
+        }
+
         Optional<Foto> fotoOpt = fotoService.fotoAbfragenNachId(id);
         if (!fotoOpt.isPresent()) {
             return "foto/liste";
