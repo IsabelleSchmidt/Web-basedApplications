@@ -48,7 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .ignoringAntMatchers("/api/foto/*")
         .and()
             .formLogin()
-            // .loginPage("/fotologin")
             .defaultSuccessUrl("/foto")
             .permitAll()
         .and()
