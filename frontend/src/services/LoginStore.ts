@@ -1,8 +1,6 @@
 import { computed, reactive } from "vue";
 import '../service/Requests'
 
-const jwtToken1: JwtToken = {username: "", accessToken: "" };
-
 const loginstate = reactive({
     
     errormessage: "",
@@ -11,19 +9,12 @@ const loginstate = reactive({
    
     isLoggedIn: false,
 
-    jwttoken:  jwtToken1
+    jwttoken:  ""
     
-    // errormessages: Array<MessageResponse>(),
-    
-    // allAdresses: Array<Adress>(),
-    
-    // user : Array<User>()
 })
 
 function doLogout(){
     loginstate.jwttoken = "";
-    // loginstate.jwttoken.email = "";
-    // state.jwttoken.roles = [];
     loginstate.errormessage = "";
     loginstate.username = "";
     loginstate.isLoggedIn = false;
@@ -34,24 +25,31 @@ async function doLogin(LoginRequest: LoginRequest): Promise<boolean> {
     loginstate.isLoggedIn = false;
     await fetch(`/api/login`, {
         method: 'POST',
-        headers: { "Content-Type": 'application/json'},
-        body: JSON.stringify(LoginRequest),
-    }).then((response) => {
-        if(!response.ok){
-            doLogout();
-            throw new Error(loginstate.errormessage);
+        headers: { "Content-Type": 'application/json',
+                Authorization: "Bearer" + loginstate.jwttoken},
+        body: JSON.stringify(LoginRequest)
+    }).then((response) => response.text() 
+    ).then((res) => {
+        loginstate.errormessage = "";
+        loginstate.isLoggedIn = true;
+        loginstate.jwttoken = String(res);
+        loginstate.username = LoginRequest.username;
+    //     if(!response.ok){
+    //         doLogout();
+    //         throw new Error(loginstate.errormessage);
             
-        }else{
-            loginstate.username = LoginRequest.username;
-            loginstate.jwttoken = LoginRequest;
-            loginstate.isLoggedIn = true;
-            loginstate.errormessage = "";
-        }
-    }).then((jsondata: JwtToken) => {
-            loginstate.jwttoken = jsondata;
-    }).catch(() => {
-            loginstate.errormessage = "Email-Adresse oder Passwort falsch."
-    })
+    //     }else{
+    //         loginstate.username = LoginRequest.username;
+    //         // loginstate.jwttoken = LoginRequest.;
+    //         loginstate.isLoggedIn = true;
+    //         loginstate.errormessage = "";
+    //     }
+    // }).then((jsondata: String) => {
+    //         loginstate.jwttoken = jsondata.toString;
+    }).catch((e) => {
+            doLogout();
+            loginstate.errormessage = e;
+    });
     return loginstate.isLoggedIn;
 }
 
