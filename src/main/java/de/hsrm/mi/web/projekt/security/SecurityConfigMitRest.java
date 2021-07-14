@@ -50,7 +50,7 @@ public class SecurityConfigMitRest {
                 .antMatchers(HttpMethod.POST, "/api/foto").hasRole("PHOTOGRAPH")
                 .antMatchers(HttpMethod.DELETE, "/api/foto/*").hasRole("PHOTOGRAPH")
                 .antMatchers("/api/**").hasAnyRole("GUCKER", "PHOTOGRAPH")
-                .anyRequest().denyAll()
+                .anyRequest().authenticated()
             .and()
                 // keine Security-Sessions für zustandsloses REST-APIs (anders als bei z.B. WebMVC)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

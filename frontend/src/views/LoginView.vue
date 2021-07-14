@@ -5,14 +5,14 @@
     <form @submit.prevent="loginUser()">
       <div class="row">
         <div class="col1">
-          <label for="email" class="left">E-Mail Adresse</label>
+          <label for="username" class="left">Username</label>
         </div>
         <div class="col2">
           <input
-            v-model="email"
-            id="email"
+            v-model="username"
+            id="username"
             type="text"
-            name="email"
+            name="username"
             size="30"
             maxlenght="50"
             class="right"
@@ -43,36 +43,33 @@
 </template>
 
 <script lang="ts">
-import Vue, { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import {useLoginStore} from "../services/LoginStore"
 import { useRouter } from "vue-router";
-import '../services/Requests'
+// import '../services/Requests'
 
 export default defineComponent({
     name: "LoginView",
 
-    setup(props, context){
+    setup(){
 
         const username = ref("");
-    
         const password = ref("");
         const router = useRouter();
 
-        const loginRequest: LoginRequest = {
-            username: username.value,
-            password: password.value
-        };
+        // const loginRequest: lo = {
+        //     username: usern.value,
+        //     password: passw.value
+        // };
     
-        const { doLogout, doLogin } = useLoginStore();
+        const { doLogout, doLogin} = useLoginStore();
     
         onMounted(async () => {
             doLogout();
         });
 
         async function loginUser(){
-            loginRequest.username = username.value;
-            loginRequest.password = password.value;
-            const loginSuccess = await doLogin(loginRequest);
+            const loginSuccess = await doLogin(username.value, password.value);
 
             if(loginSuccess){
                 router.push('/');
@@ -86,8 +83,7 @@ export default defineComponent({
             username,
             doLogin,
             password,
-            doLogout,
-            loginRequest
+            doLogout
         }
     }
 })
