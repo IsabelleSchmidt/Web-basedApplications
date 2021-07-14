@@ -33,7 +33,7 @@ import { FotoMessage } from './FotoMessage';
             fotostate.fotos = fotoliste;
         })
         .catch((fehler)=>{
-            fehler.fotostate.errormessage ="Fehler bei der Serverkommunikation";
+            fotostate.errormessage = fehler;
         });
     }
 
